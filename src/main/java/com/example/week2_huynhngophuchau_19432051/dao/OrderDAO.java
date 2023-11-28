@@ -3,8 +3,33 @@ package com.example.week2_huynhngophuchau_19432051.dao;
 import com.example.week2_huynhngophuchau_19432051.entity.Order;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderDAO {
+    private static final String GET_ALL_ORDERS_QUERY = "SELECT * FROM `order`";
+
+    public List<Order> getAllOrders() {
+        List<Order> orders = new ArrayList<>();
+
+        try (Connection connection = DataBaseConection.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(GET_ALL_ORDERS_QUERY)) {
+
+            while (resultSet.next()) {
+                Order order = new Order();
+                order.setOrderId(resultSet.getInt("order_id"));
+                order.setOrderDate(resultSet.getDate("order_date"));
+                order.setEmpId(resultSet.getInt("emp_id"));
+
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return orders;
+    }
     public void addOrder(Order order) {
         try (Connection connection = DataBaseConection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
