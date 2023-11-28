@@ -16,5 +16,35 @@ public class ProductImage {
     public ProductImage() {
     }
 
+    public int getProductId() {
+        return productId;
+    }
 
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public int getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getAlternative() {
+        return alternative;
+    }
+
+    public void setAlternative(String alternative) {
+        this.alternative = alternative;
+    }
 }

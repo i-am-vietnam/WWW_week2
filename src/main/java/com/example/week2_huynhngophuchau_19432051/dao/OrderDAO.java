@@ -105,4 +105,30 @@ public class OrderDAO {
             e.printStackTrace();
         }
     }
+    public List<Order> getOrdersByDateRange(Date startDate, Date endDate) {
+        List<Order> orders = new ArrayList<>();
+
+        try (Connection connection = DataBaseConection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT * FROM `order` WHERE order_date BETWEEN ? AND ?")) {
+
+            preparedStatement.setDate(1, new java.sql.Date(startDate.getTime()));
+            preparedStatement.setDate(2, new java.sql.Date(endDate.getTime()));
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Order order = new Order();
+                    order.setOrderId(resultSet.getInt("order_id"));
+                    order.setOrderDate(resultSet.getDate("order_date"));
+                    order.setEmpId(resultSet.getInt("emp_id"));
+
+                    orders.add(order);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
 }

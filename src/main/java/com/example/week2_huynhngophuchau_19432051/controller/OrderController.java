@@ -114,4 +114,40 @@ public class OrderController extends HttpServlet {
         orderDAO.deleteOrder(orderId);
         listOrders(request, response);
     }
+
+    private void listOrdersByDate(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Lấy theo ngày
+        String dateStr = request.getParameter("date");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = dateFormat.parse(dateStr);
+            List<Order> orders = orderDAO.getOrdersByDateRange(date);
+            request.setAttribute("orders", orders);
+            request.getRequestDispatcher("order-list.jsp").forward(request, response);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            // Xử lý lỗi
+        }
+    }
+
+    private void listOrdersByDateRange(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // lấy theo khoảng thời gian
+        String startDateStr = request.getParameter("startDate");
+        String endDateStr = request.getParameter("endDate");
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date startDate = dateFormat.parse(startDateStr);
+            Date endDate = dateFormat.parse(endDateStr);
+            List<Order> orders = orderDAO.getOrdersByDateRange(startDate, endDate);
+            request.setAttribute("orders", orders);
+            request.getRequestDispatcher("order-list.jsp").forward(request, response);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            // Xử lý lỗi chuyển đổi ngày
+        }
+    }
+
 }

@@ -2,9 +2,36 @@
 <html>
 <head>
     <title>Order List</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $(function() {
+            $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+        });
+    </script>
 </head>
 <body>
 <h2>Order List</h2>
+<!-- Ngày -->
+<form action="OrderServlet" method="get">
+    <%--@declare id="date"--%><label for="date">Date: </label>
+    <input type="text" id="datepicker" name="date">
+    <input type="submit" value="Show Orders">
+</form>
+
+<!-- Thời gian -->
+<form action="OrderServlet" method="get">
+    <%--@declare id="startdate"--%>
+    <label for="startDate">Start Date: </label>
+    <input type="text" id="startdatepicker" name="startDate">
+        <%--@declare id="enddate"--%>
+    <label for="endDate">End Date: </label>
+    <input type="text" id="enddatepicker" name="endDate">
+    <input type="submit" value="Show Orders">
+</form>
+
 <table border="1">
     <thead>
     <tr>
